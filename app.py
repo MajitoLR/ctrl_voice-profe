@@ -24,64 +24,80 @@ port=1883
 client1= paho.Client("mjandtm")
 client1.on_message = on_message
 
-# ------------------ ESTILO MORADO ------------------
+# ------------------ ESTILO PASTEL ------------------
 st.markdown("""
     <style>
     .stApp {
-        background: linear-gradient(135deg, #1a0f2e, #2e1a47);
-        color: white;
+        background: linear-gradient(135deg, #f3e8ff, #ede9fe);
         font-family: 'Segoe UI', sans-serif;
     }
 
     h1 {
         text-align: center;
-        color: #d6b3ff;
+        color: #7c3aed;
+        font-weight: 700;
     }
 
     h2, h3 {
         text-align: center;
-        color: #c084fc;
+        color: #8b5cf6;
     }
 
     .card {
-        background: rgba(255,255,255,0.05);
-        padding: 30px;
-        border-radius: 20px;
+        background: white;
+        padding: 35px;
+        border-radius: 25px;
         text-align: center;
-        box-shadow: 0px 0px 20px rgba(128,0,255,0.3);
-        margin-top: 20px;
+        box-shadow: 0px 10px 30px rgba(168, 85, 247, 0.2);
+        max-width: 500px;
+        margin: auto;
+        margin-top: 30px;
+    }
+
+    .description {
+        color: #6b7280;
+        font-size: 15px;
+        margin-bottom: 20px;
     }
 
     .stButton>button {
-        background: linear-gradient(90deg, #a855f7, #7c3aed);
-        color: white;
-        border-radius: 12px;
+        background: linear-gradient(90deg, #c4b5fd, #a78bfa);
+        color: #4c1d95;
+        border-radius: 15px;
         border: none;
-        padding: 10px 20px;
+        padding: 12px 25px;
         font-size: 16px;
+        font-weight: 600;
         transition: 0.3s;
     }
 
     .stButton>button:hover {
         transform: scale(1.05);
-        background: linear-gradient(90deg, #c084fc, #9333ea);
+        background: linear-gradient(90deg, #ddd6fe, #c4b5fd);
     }
     </style>
 """, unsafe_allow_html=True)
 
 # ------------------ UI ------------------
-st.title("🔮 INTERFACES MULTIMODALES")
-st.subheader("Control por voz para abrir puerta")
+st.title("🔮 Control de Puerta por Voz")
 
 st.markdown('<div class="card">', unsafe_allow_html=True)
 
+st.markdown("""
+<p class="description">
+Esta interfaz permite abrir una puerta mediante comandos de voz.
+El sistema captura lo que dices y lo envía a través de MQTT,
+conectándose con Wokwi para ejecutar la acción en tiempo real.
+</p>
+""", unsafe_allow_html=True)
+
 image = Image.open('voice_ctrl.jpg')
-st.image(image, width=180)
+st.image(image, width=160)
 
-st.write("🎤 Toca el botón y da la orden para abrir la puerta")
+st.write("🎤 Presiona el botón y di el comando para abrir la puerta")
 
-# ------------------ BOTÓN VOZ ------------------
-stt_button = Button(label="🎙️ Iniciar", width=200)
+# ------------------ BOTÓN ------------------
+stt_button = Button(label="🎙️ Hablar", width=200)
 
 stt_button.js_on_event("button_click", CustomJS(code="""
     var recognition = new webkitSpeechRecognition();
@@ -115,7 +131,7 @@ result = streamlit_bokeh_events(
 if result:
     if "GET_TEXT" in result:
         texto = result.get("GET_TEXT")
-        st.success(f"🗣️ Comando recibido: {texto}")
+        st.success(f"🗣️ Comando: {texto}")
 
         client1.on_publish = on_publish                            
         client1.connect(broker,port)  
