@@ -24,77 +24,87 @@ port=1883
 client1= paho.Client("mjandtm")
 client1.on_message = on_message
 
-# ------------------ ESTILO PASTEL ------------------
+# ------------------ ESTILO ------------------
 st.markdown("""
-    <style>
-    .stApp {
-        background: linear-gradient(135deg, #f3e8ff, #ede9fe);
-        font-family: 'Segoe UI', sans-serif;
-    }
+<style>
+.stApp {
+    background: linear-gradient(135deg, #F8F3FA, #EFE7F3);
+    font-family: 'Segoe UI', sans-serif;
+}
 
-    h1 {
-        text-align: center;
-        color: #7c3aed;
-        font-weight: 700;
-    }
+/* Título */
+h1 {
+    text-align: center;
+    color: #9B6BAF;
+    font-weight: 700;
+}
 
-    h2, h3 {
-        text-align: center;
-        color: #8b5cf6;
-    }
+/* Tarjeta principal */
+.card {
+    background: white;
+    padding: 35px;
+    border-radius: 25px;
+    text-align: center;
+    box-shadow: 0px 10px 25px rgba(218, 177, 218, 0.4);
+    max-width: 520px;
+    margin: auto;
+    margin-top: 30px;
+}
 
-    .card {
-        background: white;
-        padding: 35px;
-        border-radius: 25px;
-        text-align: center;
-        box-shadow: 0px 10px 30px rgba(168, 85, 247, 0.2);
-        max-width: 500px;
-        margin: auto;
-        margin-top: 30px;
-    }
+/* Bloques de texto */
+.block {
+    background: #F3E8F6;
+    padding: 15px;
+    border-radius: 15px;
+    margin-bottom: 15px;
+    color: #5B4B63;
+    font-size: 14px;
+}
 
-    .description {
-        color: #6b7280;
-        font-size: 15px;
-        margin-bottom: 20px;
-    }
+/* Botón */
+.stButton>button {
+    background: #DAB1DA;
+    color: #4B2E59;
+    border-radius: 15px;
+    border: none;
+    padding: 12px 25px;
+    font-size: 16px;
+    font-weight: 600;
+    transition: 0.3s;
+}
 
-    .stButton>button {
-        background: linear-gradient(90deg, #c4b5fd, #a78bfa);
-        color: #4c1d95;
-        border-radius: 15px;
-        border: none;
-        padding: 12px 25px;
-        font-size: 16px;
-        font-weight: 600;
-        transition: 0.3s;
-    }
-
-    .stButton>button:hover {
-        transform: scale(1.05);
-        background: linear-gradient(90deg, #ddd6fe, #c4b5fd);
-    }
-    </style>
+.stButton>button:hover {
+    background: #E6C7E6;
+    transform: scale(1.05);
+}
+</style>
 """, unsafe_allow_html=True)
 
 # ------------------ UI ------------------
-st.title("🔮 Control de Puerta por Voz")
+st.title("🔮 Control Inteligente por Voz")
 
 st.markdown('<div class="card">', unsafe_allow_html=True)
 
+# Descripción en bloques
 st.markdown("""
-<p class="description">
-Esta interfaz permite abrir una puerta mediante comandos de voz.
-El sistema captura lo que dices y lo envía a través de MQTT,
-conectándose con Wokwi para ejecutar la acción en tiempo real.
-</p>
+<div class="block">
+Este sistema permite controlar dispositivos mediante comandos de voz.
+</div>
+
+<div class="block">
+Puedes abrir o cerrar la puerta 🚪 y encender o apagar la luz 💡 en tiempo real.
+</div>
+
+<div class="block">
+La información se envía mediante MQTT y se conecta con Wokwi para ejecutar las acciones.
+</div>
 """, unsafe_allow_html=True)
 
+# Imagen
 image = Image.open('voice_ctrl.jpg')
-st.image(image, width=160)
+st.image(image, width=150)
 
-st.write("🎤 Presiona el botón y di el comando para abrir la puerta")
+st.write("🎤 Presiona el botón y da un comando")
 
 # ------------------ BOTÓN ------------------
 stt_button = Button(label="🎙️ Hablar", width=200)
@@ -131,7 +141,7 @@ result = streamlit_bokeh_events(
 if result:
     if "GET_TEXT" in result:
         texto = result.get("GET_TEXT")
-        st.success(f"🗣️ Comando: {texto}")
+        st.success(f"🗣️ Comando recibido: {texto}")
 
         client1.on_publish = on_publish                            
         client1.connect(broker,port)  
