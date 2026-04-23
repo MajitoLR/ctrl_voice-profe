@@ -32,9 +32,9 @@ st.markdown("""
     font-family: 'Segoe UI', sans-serif;
 }
 
-/* Quitar espacio blanco arriba */
+/* 🔧 SOLUCIÓN: bajar todo para que no lo tape el header */
 .block-container {
-    padding-top: 1rem;
+    padding-top: 4rem;
 }
 
 /* Título */
