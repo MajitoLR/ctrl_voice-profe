@@ -28,43 +28,60 @@ client1.on_message = on_message
 st.markdown("""
 <style>
 .stApp {
-    background: linear-gradient(135deg, #F8F3FA, #EFE7F3);
+    background: linear-gradient(135deg, #E9D5EC, #DCC6E0);
     font-family: 'Segoe UI', sans-serif;
+}
+
+/* Quitar espacio blanco arriba */
+.block-container {
+    padding-top: 1rem;
 }
 
 /* Título */
 h1 {
     text-align: center;
-    color: #9B6BAF;
-    font-weight: 700;
+    color: #4B2E59;
+    font-weight: 800;
+    margin-bottom: 30px;
 }
 
-/* Tarjeta principal */
-.card {
-    background: white;
-    padding: 35px;
-    border-radius: 25px;
-    text-align: center;
-    box-shadow: 0px 10px 25px rgba(218, 177, 218, 0.4);
-    max-width: 520px;
+/* CONTENEDOR */
+.container {
+    max-width: 800px;
     margin: auto;
-    margin-top: 30px;
 }
 
-/* Bloques de texto */
-.block {
-    background: #F3E8F6;
+/* CARDS */
+.card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: linear-gradient(135deg, #DAB1DA, #CFA7CF);
+    padding: 25px;
+    border-radius: 25px;
+    margin-bottom: 20px;
+    box-shadow: 0px 8px 20px rgba(155, 107, 175, 0.3);
+}
+
+/* ICONOS */
+.icon {
+    font-size: 35px;
+    background: rgba(255,255,255,0.4);
     padding: 15px;
-    border-radius: 15px;
-    margin-bottom: 15px;
-    color: #5B4B63;
-    font-size: 14px;
+    border-radius: 50%;
 }
 
-/* Botón */
+/* TEXTO */
+.text {
+    color: #3B2A44;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+/* BOTÓN */
 .stButton>button {
     background: #DAB1DA;
-    color: #4B2E59;
+    color: #3B2A44;
     border-radius: 15px;
     border: none;
     padding: 12px 25px;
@@ -74,7 +91,7 @@ h1 {
 }
 
 .stButton>button:hover {
-    background: #E6C7E6;
+    background: #CFA7CF;
     transform: scale(1.05);
 }
 </style>
@@ -83,27 +100,33 @@ h1 {
 # ------------------ UI ------------------
 st.title("🔮 Control Inteligente por Voz")
 
-st.markdown('<div class="card">', unsafe_allow_html=True)
+st.markdown('<div class="container">', unsafe_allow_html=True)
 
-# Descripción en bloques
 st.markdown("""
-<div class="block">
-Este sistema permite controlar dispositivos mediante comandos de voz.
+<div class="card">
+    <div class="icon">🎤</div>
+    <div class="text">
+        Este sistema permite controlar dispositivos mediante comandos de voz.
+    </div>
 </div>
 
-<div class="block">
-Puedes abrir o cerrar la puerta 🚪 y encender o apagar la luz 💡 en tiempo real.
+<div class="card">
+    <div class="icon">🚪</div>
+    <div class="text">
+        Puedes abrir o cerrar la puerta y encender o apagar la luz 💡 en tiempo real.
+    </div>
 </div>
 
-<div class="block">
-La información se envía mediante MQTT y se conecta con Wokwi para ejecutar las acciones.
+<div class="card">
+    <div class="icon">📡</div>
+    <div class="text">
+        La información se envía mediante MQTT y se conecta con Wokwi para ejecutar las acciones.
+    </div>
 </div>
 """, unsafe_allow_html=True)
 
-# Imagen
-image = Image.open('voice_ctrl.jpg')
-st.image(image, width=150)
-
+# Espacio + instrucción
+st.markdown("<br>", unsafe_allow_html=True)
 st.write("🎤 Presiona el botón y da un comando")
 
 # ------------------ BOTÓN ------------------
